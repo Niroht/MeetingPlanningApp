@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MeetingPlanningApp"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="800">
   <Window.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -15,6 +15,6 @@
     </ResourceDictionary>
   </Window.Resources>
   <Grid>
-    <ContentPresenter Content="{Binding CurrentViewModel}" />
+    <ContentPresenter Content="{Binding CurrentViewModel}" Margin="20" />
   </Grid>
 </Window>

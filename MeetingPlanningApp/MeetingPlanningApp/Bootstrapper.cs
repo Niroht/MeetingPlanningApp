@@ -1,4 +1,6 @@
-﻿using MeetingPlanningApp.Services;
+﻿using DataAccess;
+using DataAccess.Common.Interfaces;
+using MeetingPlanningApp.Services;
 using MeetingPlanningApp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity;
+using Unity.Lifetime;
 
 namespace MeetingPlanningApp
 {
@@ -24,6 +27,9 @@ namespace MeetingPlanningApp
 
         private static void RegisterInterfaces(UnityContainer container)
         {
+            container.RegisterType<IMeetingStore, MeetingStore>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMeetingPersister, MeetingPersister>();
+            container.RegisterType<IMeetingProvider, MeetingProvider>();
             container.RegisterType<IViewModelRenderer, ViewModelRenderer>();
         }
     }

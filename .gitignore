@@ -2,3 +2,9 @@ MeetingPlanningApp/.vs/
 MeetingPlanningApp/packages/
 MeetingPlanningApp/MeetingPlanningApp/bin/
 MeetingPlanningApp/MeetingPlanningApp/obj/
+MeetingPlanningApp/DataAccessTests/bin/
+MeetingPlanningApp/DataAccess/obj/
+MeetingPlanningApp/DataAccess/bin/
+MeetingPlanningApp/DataAccessTests/obj/
+MeetingPlanningApp/DataAccess.Common/obj/
+MeetingPlanningApp/DataAccess.Common/bin/
