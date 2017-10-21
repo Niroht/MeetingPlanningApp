@@ -18,12 +18,15 @@ namespace MeetingPlanningApp.ViewModel
 
         public string Agenda { get; set; }
 
+        public IEnumerable<Attendant> Attendants { get; set; }
+
         public MeetingViewModel(Meeting meeting)
         {
             Id = meeting.Id;
             ScheduledTime = meeting.ScheduledTime;
             Title = meeting.Title;
             Agenda = meeting.Agenda;
+            Attendants = meeting.Attendants;
         }
     }
 }

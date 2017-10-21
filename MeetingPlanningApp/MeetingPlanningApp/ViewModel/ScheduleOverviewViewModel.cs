@@ -16,16 +16,21 @@ namespace MeetingPlanningApp.ViewModel
         private readonly IMeetingProvider _meetingProvider;
         private readonly IMeetingPersister _meetingPersister;
 
-        private IEnumerable<MeetingViewModel> _currentMeetingsInView;
-        public IEnumerable<MeetingViewModel> CurrentMeetingsInView
+        private IEnumerable<MeetingViewModel> _allMeetingsInView;
+
+        public IEnumerable<MeetingViewModel> UpcomingMeetings
         {
             get
             {
-                return _currentMeetingsInView;
+                return _allMeetingsInView.Where(x => (x.ScheduledTime - DateTime.Now).Days < 3);
             }
-            set
+        }
+
+        public IEnumerable<MeetingViewModel> CalendarMeetings
+        {
+            get
             {
-                Set(nameof(CurrentMeetingsInView), ref _currentMeetingsInView, value);
+                return _allMeetingsInView.Where(x => x.ScheduledTime.Month == DateTime.Now.Month);
             }
         }
 
@@ -68,6 +73,19 @@ namespace MeetingPlanningApp.ViewModel
             }
         }
 
+        private IEnumerable<Attendant> _newMeetingAttendants;
+        public IEnumerable<Attendant> NewMeetingAttendants
+        {
+            get
+            {
+                return _newMeetingAttendants;
+            }
+            set
+            {
+                Set(nameof(NewMeetingAttendants), ref _newMeetingAttendants, value);
+            }
+        }
+
         public ICommand SaveNewMeetingCommand => new RelayCommand(async () => await SaveNewMeeting());
 
         public ICommand RefreshCommand => new RelayCommand(async () => await LoadMeetings());
@@ -82,14 +100,17 @@ namespace MeetingPlanningApp.ViewModel
 
         private async Task LoadMeetings()
         {
-            CurrentMeetingsInView = (await _meetingProvider
+            _allMeetingsInView = (await _meetingProvider
                 .GetMeetings(DateTime.Today, DateTime.Today.AddDays(30)))
                 .Select(x => new MeetingViewModel(x));
+
+            RaisePropertyChanged(nameof(UpcomingMeetings));
+            RaisePropertyChanged(nameof(CalendarMeetings));
         }
 
         private async Task SaveNewMeeting()
         {
-            await _meetingPersister.SaveMeeting(new Meeting(NewMeetingDate, NewMeetingTitle, NewMeetingAgenda));
+            await _meetingPersister.SaveMeeting(new Meeting(NewMeetingDate, NewMeetingTitle, NewMeetingAgenda, NewMeetingAttendants));
 
             await LoadMeetings();
         }

@@ -4,6 +4,7 @@ using NUnit.Framework;
 using DataAccess;
 using Moq;
 using DataAccess.Common.Model;
+using System.Linq;
 
 namespace DataAccessTests
 {
@@ -16,11 +17,11 @@ namespace DataAccessTests
             // arrange
             var tc = new TestContext();
 
-            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a") };
-            tc.MeetingStoreMock.SetupGet(x => x.MockMeetingData).Returns(meetings);
+            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendant>()) };
+            tc.MeetingStoreMock.Setup(x => x.GetMeetings()).Returns(meetings);
 
             // act
-            tc.Sut.SaveMeeting(new Meeting(DateTime.Today.AddDays(1), "b", "b", meetings[0].Id));
+            tc.Sut.SaveMeeting(new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendant>(), meetings[0].Id));
 
             // assert
             tc.MeetingStoreMock.Verify(x => x.UpdateMeeting(It.Is<Meeting>(meeting => meeting.Id == meetings[0].Id)));
@@ -33,10 +34,10 @@ namespace DataAccessTests
             // arrange
             var tc = new TestContext();
 
-            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a") };
-            tc.MeetingStoreMock.SetupGet(x => x.MockMeetingData).Returns(meetings);
+            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendant>()) };
+            tc.MeetingStoreMock.Setup(x => x.GetMeetings()).Returns(meetings);
 
-            var newMeeting = new Meeting(DateTime.Today.AddDays(1), "b", "b");
+            var newMeeting = new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendant>());
 
             // act
             tc.Sut.SaveMeeting(newMeeting);

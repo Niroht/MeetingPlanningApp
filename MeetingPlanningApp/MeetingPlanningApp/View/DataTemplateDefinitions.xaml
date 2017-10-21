@@ -3,5 +3,6 @@
                     xmlns:local="clr-namespace:MeetingPlanningApp.View">
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="ScheduleOverviewView.xaml" />
+    <ResourceDictionary Source="UpcomingMEetingView.xaml" />
   </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
