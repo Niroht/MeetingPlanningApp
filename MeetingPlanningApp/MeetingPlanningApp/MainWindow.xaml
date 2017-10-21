@@ -17,5 +17,20 @@
   </Window.Resources>
   <Grid>
     <ContentPresenter Content="{Binding CurrentViewModel}" Margin="20" />
+
+    <Border 
+      Background="Gray" 
+      Visibility="{Binding ModalVisibility}" 
+      Margin="100" 
+      Padding="20"
+      BorderBrush="Black"
+      BorderThickness="2"
+      CornerRadius="3"
+      Panel.ZIndex="2">
+      <StackPanel>
+        <Button HorizontalAlignment="Right" Content="Close" Command="{Binding HideModalCommand}" />
+        <ContentPresenter Content="{Binding ModalViewModel}" />
+      </StackPanel>
+    </Border>
   </Grid>
 </Window>

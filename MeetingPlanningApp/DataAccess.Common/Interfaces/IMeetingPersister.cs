@@ -10,5 +10,7 @@ namespace DataAccess.Common.Interfaces
     public interface IMeetingPersister
     {
         Task SaveMeeting(Meeting meeting);
+
+        Task DeleteMeeting(Meeting meeting);
     }
 }

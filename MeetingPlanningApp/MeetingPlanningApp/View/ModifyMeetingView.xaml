@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MeetingPlanningApp.View"
+                    xmlns:converter="clr-namespace:MeetingPlanningApp.Converter"
+                    xmlns:vm="clr-namespace:MeetingPlanningApp.ViewModel">
+  <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+  <DataTemplate DataType="{x:Type vm:ModifyMeetingViewModel}">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition/>
+        <RowDefinition/>
+        <RowDefinition/>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+
+      <TextBlock Text="Date" />
+      <DatePicker SelectedDate="{Binding ScheduledTime}" Grid.Column="1"/>
+
+      <TextBlock Text="Title" Grid.Row="1"/>
+      <TextBox Text="{Binding Title}" Grid.Row="1" Grid.Column="1"/>
+
+      <TextBlock Text="Agenda" Grid.Row="2"/>
+      <TextBox Text="{Binding Agenda}" Grid.Row="2" Grid.Column="2" />
+
+      <StackPanel Orientation="Horizontal" Grid.Row="3">
+        <Button Content="Save" Command="{Binding SaveNewMeetingCommand}" />
+        <Button Content="Delete" Command="{Binding DeleteMeetingCommand}" Visibility="{Binding ExistingMeeting, Converter={StaticResource NullToVisibilityConverter}}"/>
+      </StackPanel>
+
+    </Grid>
+  </DataTemplate>
+</ResourceDictionary>

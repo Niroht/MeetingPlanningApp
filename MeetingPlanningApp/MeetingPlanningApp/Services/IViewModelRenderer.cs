@@ -10,5 +10,9 @@ namespace MeetingPlanningApp.Services
     public interface IViewModelRenderer
     {
         void RenderViewModel<T>() where T : ViewModelBase;
+
+        void RenderViewModelInModal(ViewModelBase viewModel);
+
+        void HideModal();
     }
 }

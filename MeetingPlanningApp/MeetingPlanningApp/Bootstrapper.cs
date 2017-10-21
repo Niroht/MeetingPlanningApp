@@ -1,5 +1,7 @@
 ﻿using DataAccess;
 using DataAccess.Common.Interfaces;
+using GalaSoft.MvvmLight.Messaging;
+using MeetingPlanningApp.Factory;
 using MeetingPlanningApp.Services;
 using MeetingPlanningApp.ViewModel;
 using System;
@@ -31,6 +33,9 @@ namespace MeetingPlanningApp
             container.RegisterType<IMeetingPersister, MeetingPersister>();
             container.RegisterType<IMeetingProvider, MeetingProvider>();
             container.RegisterType<IViewModelRenderer, ViewModelRenderer>();
+            container.RegisterType<IMessenger, Messenger>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IModifyMeetingViewModelFactory, ModifyMeetingViewModelFactory>();
+            container.RegisterType<IMeetingViewModelFactory, MeetingViewModelFactory>();
         }
     }
 }

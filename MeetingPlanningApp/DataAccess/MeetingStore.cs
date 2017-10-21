@@ -27,14 +27,19 @@ namespace DataAccess
 
         public void UpdateMeeting(Meeting meeting)
         {
-            var existingMeeting = _mockMeetingData.First(x => x.Id == meeting.Id);
-
-            existingMeeting = meeting;
+            DeleteMeeting(meeting.Id);
+            AddNewMeeting(meeting);
         }
 
         public void AddNewMeeting(Meeting meeting)
         {
             _mockMeetingData.Add(meeting);
+        }
+
+        public void DeleteMeeting(Guid meetingId)
+        {
+            var meeting = _mockMeetingData.First(x => x.Id == meetingId);
+            _mockMeetingData.Remove(meeting);
         }
     }
 }

@@ -23,38 +23,21 @@
 
       <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding CalendarMeetings}" />
 
-      <Border Grid.Row="2" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1" CornerRadius="3">
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-          </Grid.RowDefinitions>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-          </Grid.ColumnDefinitions>
-
-          <TextBlock Text="Date" />
-          <DatePicker SelectedDate="{Binding NewMeetingDate}" Grid.Column="1"/>
-
-          <TextBlock Text="Title" Grid.Row="1"/>
-          <TextBox Text="{Binding NewMeetingTitle}" Grid.Row="1" Grid.Column="1"/>
-
-          <TextBlock Text="Agenda" Grid.Row="2"/>
-          <TextBox Text="{Binding NewMeetingAgenda}" Grid.Row="2" Grid.Column="2" />
-
-          <Button Content="Save" Command="{Binding SaveNewMeetingCommand}" Grid.Row="3"/>
-        </Grid>
-      </Border>
+      <Button
+        Grid.Row="2"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Bottom"
+        Command="{Binding NewMeetingCommand}"
+        Content="New Meeting"
+        />
 
       <Button 
+        Grid.Row="2"
+        Grid.Column="1"
         HorizontalAlignment="Right" 
         VerticalAlignment="Bottom" 
         Content="Refresh" 
         Command="{Binding RefreshCommand}" 
-        Grid.Row="2"
         />
     </Grid>
   </DataTemplate>

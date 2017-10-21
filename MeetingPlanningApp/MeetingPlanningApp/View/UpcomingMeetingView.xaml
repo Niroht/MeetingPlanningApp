@@ -3,20 +3,26 @@
                     xmlns:local="clr-namespace:MeetingPlanningApp.View"
                     xmlns:vm ="clr-namespace:MeetingPlanningApp.ViewModel">
   <DataTemplate x:Key="UpcomingMeetingView" DataType="{x:Type vm:MeetingViewModel}">
-    <Border Margin="10" Background="LightBlue" CornerRadius="3">
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Button Command="{Binding ModifyMeetingCommand}">
+      <Button.Template>
+        <ControlTemplate>
+          <Border Margin="10" Background="LightBlue" CornerRadius="3">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding ScheduledTime, StringFormat='{}{0:f}'}" Style="{DynamicResource HeaderText}"/>
-        <TextBlock Grid.Row="1" Text="{Binding Title}"/>
-        <TextBlock Grid.Row="2" Text="{Binding Agenda}"/>
-        <TextBlock Grid.Row="3" Text="{Binding Attendants.Count, StringFormat='{}{0} Attendants'}" />
-      </Grid>
-    </Border>
+              <TextBlock Text="{Binding ScheduledTime, StringFormat='{}{0:f}'}" Style="{DynamicResource HeaderText}"/>
+              <TextBlock Grid.Row="1" Text="{Binding Title}"/>
+              <TextBlock Grid.Row="2" Text="{Binding Agenda}"/>
+              <TextBlock Grid.Row="3" Text="{Binding Attendants.Count, StringFormat='{}{0} Attendants'}" />
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Button.Template>
+    </Button>
   </DataTemplate>
 </ResourceDictionary>

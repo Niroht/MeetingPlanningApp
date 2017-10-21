@@ -77,8 +77,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Converter\NullToVisibilityConverter.cs" />
+    <Compile Include="Factory\IMeetingViewModelFactory.cs" />
+    <Compile Include="Factory\MeetingViewModelFactory.cs" />
+    <Compile Include="Factory\ModifyMeetingViewModelFactory.cs" />
+    <Compile Include="Factory\IModifyMeetingViewModelFactory.cs" />
     <Compile Include="Services\IViewModelRenderer.cs" />
     <Compile Include="Services\ViewModelRenderer.cs" />
+    <Compile Include="ViewModel\ModifyMeetingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MeetingViewModel.cs" />
     <Compile Include="ViewModel\ScheduleOverviewViewModel.cs" />
@@ -99,6 +105,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ModifyMeetingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DataTemplateDefinitions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -16,15 +16,15 @@ namespace DataAccess.Common.Model
 
         public string Agenda { get; }
 
-        public IEnumerable<Attendant> Attendants { get; }
+        public IEnumerable<Attendant> Attendees { get; }
 
-        public Meeting(DateTime scheduledTime, string title, string agenda, IEnumerable<Attendant> attendants, Guid? id = null)
+        public Meeting(DateTime scheduledTime, string title, string agenda, IEnumerable<Attendant> attendees, Guid? id = null)
         {
             Id = id ?? Guid.NewGuid();
             ScheduledTime = scheduledTime;
             Title = title;
             Agenda = agenda;
-            Attendants = attendants;
+            Attendees = attendees;
         }
     }
 }

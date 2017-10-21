@@ -14,5 +14,7 @@ namespace DataAccess
         void UpdateMeeting(Meeting meeting);
 
         void AddNewMeeting(Meeting meeting);
+
+        void DeleteMeeting(Guid meetingId);
     }
 }
