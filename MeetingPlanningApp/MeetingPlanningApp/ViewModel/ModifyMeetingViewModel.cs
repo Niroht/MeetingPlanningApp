@@ -208,6 +208,8 @@ namespace MeetingPlanningApp.ViewModel
             }
         }
 
+        public ICommand RemoveAttendeeCommand => new RelayCommand<Attendee>(async x => await RemoveAttendee(x));
+
         public ICommand DeleteMeetingCommand => new RelayCommand(async () => await DeleteMeeting());
 
         public ICommand AddAttendeeCommand => new RelayCommand(async () => await AddAttendee(), CanAddAttendee);
@@ -248,6 +250,13 @@ namespace MeetingPlanningApp.ViewModel
             }
 
             IdentifyConflicts();
+        }
+
+        private async Task RemoveAttendee(Attendee attendee)
+        {
+            Attendees.Remove(attendee);
+
+            await IdentifyConflicts();
         }
 
         private async Task AddAttendee()

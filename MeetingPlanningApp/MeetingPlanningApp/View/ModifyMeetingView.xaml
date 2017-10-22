@@ -53,17 +53,40 @@
 
       <StackPanel Grid.Row="5" Grid.ColumnSpan="2" >
         <TextBlock Text="Attendees" Style="{DynamicResource HeaderText}" />
-        <DataGrid ItemsSource="{Binding Attendees}" />
+        <DataGrid 
+          x:Name="AttendeeGrid" 
+          ItemsSource="{Binding Attendees}" 
+          AutoGenerateColumns="False"
+          HeadersVisibility="Column"
+          ColumnWidth="*">
+          <DataGrid.Columns>
+            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+            <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+            <DataGridTemplateColumn Width="Auto">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Button Content="Remove" Command="{Binding DataContext.RemoveAttendeeCommand, ElementName=AttendeeGrid}" CommandParameter="{Binding}" />
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+          </DataGrid.Columns>
+        </DataGrid>
       </StackPanel>
 
-      <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal">
-        <TextBlock Text="New Attendee" Style="{DynamicResource HeaderText}"/>
-        <TextBlock Text="Name: "/>
-        <TextBox Text="{Binding NewAttendeeName, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock Text="Email: "/>
-        <TextBox Text="{Binding NewAttendeeEmail, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Content="Add" Command="{Binding AddAttendeeCommand}" />
-      </StackPanel>
+      <Grid Grid.Row="6" Grid.ColumnSpan="2">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="New Attendee" Style="{DynamicResource HeaderText}" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+          <TextBlock Text="Name: " VerticalAlignment="Center"/>
+          <TextBox Text="{Binding NewAttendeeName, UpdateSourceTrigger=PropertyChanged}" Width="100" VerticalAlignment="Center"/>
+          <TextBlock Text="Email: " VerticalAlignment="Center"/>
+          <TextBox Text="{Binding NewAttendeeEmail, UpdateSourceTrigger=PropertyChanged}" Width="100" VerticalAlignment="Center"/>
+          <Button Content="Add" Command="{Binding AddAttendeeCommand}" />
+        </StackPanel>
+      </Grid>
 
       <StackPanel Orientation="Horizontal" Grid.Row="7">
         <Button Content="Save" Command="{Binding SaveNewMeetingCommand}" />
