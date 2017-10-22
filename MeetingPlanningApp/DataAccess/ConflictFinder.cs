@@ -48,7 +48,7 @@ namespace DataAccess
         {
             foreach (var attendee in attendees)
             {
-                var isAttendeeInMeeting = existingMeeting.Attendees.Any(x => x.Email == attendee.Email);
+                var isAttendeeInMeeting = existingMeeting.Attendees.Any(x => x.Email.Equals(attendee.Email, StringComparison.CurrentCultureIgnoreCase));
 
                 if (!isAttendeeInMeeting)
                 {

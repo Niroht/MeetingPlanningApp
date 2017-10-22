@@ -1,32 +1,53 @@
 ﻿using DataAccess.Common.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Common.Model;
 using GalaSoft.MvvmLight.Messaging;
 using DataAccess.Messages;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
+using DataAccess.Azure;
 
 namespace DataAccess
 {
     public class MeetingPersister : IMeetingPersister
     {
         private readonly IMessenger _messenger;
-        private readonly IMeetingStore _meetingStore;
+
+        private CloudStorageAccount _storageAccount;
+        CloudTableClient _tableClient;
+
+        public MeetingPersister(IMessenger messenger)
+        {
+            _messenger = messenger;
+
+            _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            _tableClient = _storageAccount.CreateCloudTableClient();
+        }
 
         public Task SaveMeeting(Meeting meeting)
         {
-            var existingMeeting = _meetingStore.GetMeetings().FirstOrDefault(x => x.Id == meeting.Id);
+            var table = GetTable();
+            var retrieveOperation = TableOperation.Retrieve("meeting", meeting.Id.ToString());
 
-            if (existingMeeting != null)
+            var existingMeeting = table.Execute(retrieveOperation);
+
+            TableOperation writeOperation;
+            if (existingMeeting.Result != null)
             {
-                _meetingStore.UpdateMeeting(meeting);
+                var entity = meeting.ToMeetingEntity();
+                entity.ETag = existingMeeting.Etag;
+                writeOperation = TableOperation.Replace(entity);
+                table.Execute(writeOperation);
+
                 _messenger.Send(new MeetingUpdatedMessage(meeting));
             }
             else
             {
-                _meetingStore.AddNewMeeting(meeting);
+                writeOperation = TableOperation.Insert(meeting.ToMeetingEntity());
+                table.Execute(writeOperation);
+
                 _messenger.Send(new MeetingCreatedMessage(meeting));
             }
 
@@ -35,16 +56,24 @@ namespace DataAccess
 
         public Task DeleteMeeting(Meeting meeting)
         {
-            _meetingStore.DeleteMeeting(meeting.Id);
+            var table = GetTable();
+            var retrieveOperation = TableOperation.Retrieve("meetings", meeting.Id.ToString());
+
+            var existingMeeting = table.Execute(retrieveOperation);
+            var entity = meeting.ToMeetingEntity();
+            entity.ETag = existingMeeting.Etag;
+            TableOperation.Delete(entity);
             _messenger.Send(new MeetingDeletedMessage(meeting));
 
             return Task.CompletedTask;
         }
 
-        public MeetingPersister(IMeetingStore meetingStore, IMessenger messenger)
+        private CloudTable GetTable()
         {
-            _meetingStore = meetingStore;
-            _messenger = messenger;
+            var table = _tableClient.GetTableReference("meetings");
+            table.CreateIfNotExists();
+
+            return table;
         }
     }
 }

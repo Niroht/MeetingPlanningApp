@@ -21,7 +21,7 @@
       <ItemsControl 
         Grid.Row="1" 
         ItemsSource="{Binding DayViewModels}" 
-        HorizontalAlignment="Center">
+        HorizontalAlignment="Stretch">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
             <UniformGrid Columns="7"/>

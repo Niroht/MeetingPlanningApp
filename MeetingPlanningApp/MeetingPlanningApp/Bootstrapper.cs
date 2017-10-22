@@ -29,7 +29,6 @@ namespace MeetingPlanningApp
 
         private static void RegisterInterfaces(UnityContainer container)
         {
-            container.RegisterType<IMeetingStore, MeetingStore>(new ContainerControlledLifetimeManager());
             container.RegisterType<IMeetingPersister, MeetingPersister>();
             container.RegisterType<IMeetingProvider, MeetingProvider>();
             container.RegisterType<IViewModelRenderer, ViewModelRenderer>();
