@@ -14,6 +14,8 @@ namespace DataAccess.Common.Model
 
         public TimeSpan Duration { get; }
 
+        public DateTime EndTime => ScheduledTime.Add(Duration);
+
         public string Title { get; }
 
         public string Agenda { get; }

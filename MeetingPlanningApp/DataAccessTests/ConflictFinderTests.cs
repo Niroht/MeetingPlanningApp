@@ -26,7 +26,7 @@ namespace DataAccessTests
             tc.MeetingProviderMock.Setup(x => x.GetMeetings(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(Task.FromResult<IEnumerable<Meeting>>(new[] { existingMeeting }));
 
             // act
-            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, TimeSpan.FromHours(1), existingMeeting.Id);
+            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, DateTime.Now.AddHours(1), existingMeeting.Id);
 
             // assert
             Assert.AreEqual(0, result.Count());
@@ -44,7 +44,7 @@ namespace DataAccessTests
             tc.MeetingProviderMock.Setup(x => x.GetMeetings(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(Task.FromResult<IEnumerable<Meeting>>(new[] { existingMeeting }));
 
             // act
-            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, TimeSpan.FromHours(1), Guid.NewGuid());
+            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, DateTime.Now.AddHours(1), Guid.NewGuid());
 
             // assert
             Assert.AreEqual(1, result.Count());
@@ -64,7 +64,7 @@ namespace DataAccessTests
             tc.MeetingProviderMock.Setup(x => x.GetMeetings(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(Task.FromResult<IEnumerable<Meeting>>(new[] { existingMeeting }));
 
             // act
-            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, TimeSpan.FromHours(1));
+            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, DateTime.Now.AddHours(1));
 
             // assert
             Assert.AreEqual(1, result.Count());
@@ -84,7 +84,7 @@ namespace DataAccessTests
             tc.MeetingProviderMock.Setup(x => x.GetMeetings(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(Task.FromResult<IEnumerable<Meeting>>(new[] { existingMeeting }));
 
             // act
-            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, TimeSpan.FromHours(1));
+            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, DateTime.Now.AddHours(1));
 
             // assert
             Assert.AreEqual(1, result.Count());
@@ -104,7 +104,7 @@ namespace DataAccessTests
             tc.MeetingProviderMock.Setup(x => x.GetMeetings(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(Task.FromResult<IEnumerable<Meeting>>(new[] { existingMeeting }));
 
             // act
-            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, TimeSpan.FromHours(1));
+            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, DateTime.Now.AddHours(1));
 
             // assert
             Assert.AreEqual(1, result.Count());
@@ -128,7 +128,7 @@ namespace DataAccessTests
             tc.MeetingProviderMock.Setup(x => x.GetMeetings(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(Task.FromResult<IEnumerable<Meeting>>(existingMeetings));
 
             // act
-            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, TimeSpan.FromHours(1));
+            var result = await tc.Sut.FindConflictsAsync(new[] { attendee }, DateTime.Now, DateTime.Now.AddHours(1));
 
             // assert
             Assert.AreEqual(1, result.Count());
@@ -152,7 +152,7 @@ namespace DataAccessTests
             tc.MeetingProviderMock.Setup(x => x.GetMeetings(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(Task.FromResult<IEnumerable<Meeting>>(existingMeetings));
 
             // act
-            var result = await tc.Sut.FindConflictsAsync(new[] { attendeeOne, attendeeTwo }, DateTime.Now, TimeSpan.FromHours(1));
+            var result = await tc.Sut.FindConflictsAsync(new[] { attendeeOne, attendeeTwo }, DateTime.Now, DateTime.Now.AddHours(1));
 
             // assert
             Assert.AreEqual(2, result.Count());

@@ -9,6 +9,6 @@ namespace DataAccess.Common.Interfaces
 {
     public interface IConflictFinder
     {
-        Task<IEnumerable<AttendeeConflicts>> FindConflictsAsync(IEnumerable<Attendee> attendees, DateTime scheduledTime, TimeSpan duration, Guid? meetingId = null);
+        Task<IEnumerable<AttendeeConflicts>> FindConflictsAsync(IEnumerable<Attendee> attendees, DateTime scheduledTime, DateTime endTime, Guid? meetingId = null);
     }
 }

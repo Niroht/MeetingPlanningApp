@@ -17,13 +17,13 @@ namespace DataAccess
             _meetingProvider = meetingProvider;
         }
 
-        public async Task<IEnumerable<AttendeeConflicts>> FindConflictsAsync(IEnumerable<Attendee> attendees, DateTime scheduledTime, TimeSpan duration, Guid?meetingId = null)
+        public async Task<IEnumerable<AttendeeConflicts>> FindConflictsAsync(IEnumerable<Attendee> attendees, DateTime scheduledTime, DateTime endTime, Guid?meetingId = null)
         {
-            var existingMeetings = await _meetingProvider.GetMeetings(scheduledTime.Date, scheduledTime.Add(duration).Date);
+            var existingMeetings = await _meetingProvider.GetMeetings(scheduledTime.Date, endTime.Date);
 
             var conflicts = new List<AttendeeConflicts>();
 
-            foreach(var meeting in existingMeetings.Where(x => x.Id != meetingId && MeetingConflicts(x, scheduledTime, duration)))
+            foreach(var meeting in existingMeetings.Where(x => x.Id != meetingId && MeetingConflicts(x, scheduledTime, endTime)))
             {
                 AddAttendeeConflictsForMeeting(attendees, meeting, conflicts);
             }
@@ -31,12 +31,12 @@ namespace DataAccess
             return conflicts;
         }
 
-        private bool MeetingConflicts(Meeting existingMeeting, DateTime scheduledTime, TimeSpan duration)
+        private bool MeetingConflicts(Meeting existingMeeting, DateTime scheduledTime, DateTime endTime)
         {
-            var isBeginningTimeInConflict = existingMeeting.ScheduledTime > scheduledTime && existingMeeting.ScheduledTime < scheduledTime.Add(duration);
-            var isEndTimeInConflict = existingMeeting.ScheduledTime.Add(existingMeeting.Duration) > scheduledTime && existingMeeting.ScheduledTime.Add(existingMeeting.Duration) < scheduledTime.Add(duration);
+            var isBeginningTimeInConflict = existingMeeting.ScheduledTime > scheduledTime && existingMeeting.ScheduledTime < endTime;
+            var isEndTimeInConflict = existingMeeting.EndTime> scheduledTime && existingMeeting.EndTime < endTime;
 
-            var isCompleteOverlap = existingMeeting.ScheduledTime < scheduledTime && existingMeeting.ScheduledTime.Add(existingMeeting.Duration) > scheduledTime.Add(duration);
+            var isCompleteOverlap = existingMeeting.ScheduledTime < scheduledTime && existingMeeting.EndTime > endTime;
 
             return isBeginningTimeInConflict || isEndTimeInConflict || isCompleteOverlap;
         }

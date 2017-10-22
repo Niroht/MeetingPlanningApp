@@ -275,7 +275,7 @@ namespace MeetingPlanningApp.ViewModel
 
         private async Task IdentifyConflicts()
         {
-            var conflicts = await _conflictFinder.FindConflictsAsync(Attendees, _scheduledDateTime, _duration, _existingMeeting?.Id);
+            var conflicts = await _conflictFinder.FindConflictsAsync(Attendees, _scheduledDateTime, _scheduledDateTime.Add(_duration), _existingMeeting?.Id);
 
             if (conflicts.Any())
             {
