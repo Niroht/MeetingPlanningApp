@@ -15,9 +15,10 @@ namespace DataAccess
                 DateTime.Now.AddDays(3), 
                 "Test Meeting 1", 
                 "Prepare for meeting 2", 
-                new []{ new Attendant("John Doe", "test@test.test"), new Attendant("Jane Doe", "x@y.z") }),
-            new Meeting(DateTime.Now.AddDays(5), "Test Meeting 2", "Discuss meeting 1; prepare for meeting 3", Enumerable.Empty<Attendant>()),
-            new Meeting(DateTime.Now.AddDays(15), "Test Meeting 3", "Finish Having Meetings", Enumerable.Empty<Attendant>())
+                new []{ new Attendee("John Doe", "test@test.test"), new Attendee("Jane Doe", "x@y.z") },
+                TimeSpan.FromHours(1)),
+            new Meeting(DateTime.Now.AddDays(5), "Test Meeting 2", "Discuss meeting 1; prepare for meeting 3", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1)),
+            new Meeting(DateTime.Now.AddDays(15), "Test Meeting 3", "Finish Having Meetings", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1))
         };
 
         public IEnumerable<Meeting> GetMeetings()

@@ -12,13 +12,18 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
 
-              <TextBlock Text="{Binding ScheduledTime, StringFormat='{}{0:f}'}" Style="{DynamicResource HeaderText}"/>
-              <TextBlock Grid.Row="1" Text="{Binding Title}"/>
-              <TextBlock Grid.Row="2" Text="{Binding Agenda}"/>
-              <TextBlock Grid.Row="3" Text="{Binding Attendants.Count, StringFormat='{}{0} Attendants'}" />
+              <TextBlock Style="{DynamicResource HeaderText}">
+                <Run Text="{Binding ScheduledTime, StringFormat='{}{0:f}'}"/>
+                -
+                <Run Text="{Binding EndTime, StringFormat='{}{0:t}', Mode=OneWay}"/>
+              </TextBlock>
+              <TextBlock Grid.Row="2" Text="{Binding Title}"/>
+              <TextBlock Grid.Row="3" Text="{Binding Agenda}"/>
+              <TextBlock Grid.Row="4" Text="{Binding Attendants.Count, StringFormat='{}{0} Attendants'}" />
             </Grid>
           </Border>
         </ControlTemplate>

@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConflictFinder.cs" />
     <Compile Include="IMeetingStore.cs" />
     <Compile Include="MeetingPersister.cs" />
     <Compile Include="MeetingProvider.cs" />

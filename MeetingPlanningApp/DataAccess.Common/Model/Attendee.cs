@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Common.Model
 {
-    public class Attendant
+    public class Attendee
     {
         public string Name { get; }
 
         public string Email { get; }
 
-        public Attendant(string name, string email)
+        public Attendee(string name, string email)
         {
             Name = name;
             Email = email;

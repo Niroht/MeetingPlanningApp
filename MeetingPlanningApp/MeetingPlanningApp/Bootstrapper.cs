@@ -36,6 +36,7 @@ namespace MeetingPlanningApp
             container.RegisterType<IMessenger, Messenger>(new ContainerControlledLifetimeManager());
             container.RegisterType<IModifyMeetingViewModelFactory, ModifyMeetingViewModelFactory>();
             container.RegisterType<IMeetingViewModelFactory, MeetingViewModelFactory>();
+            container.RegisterType<IConflictFinder, ConflictFinder>();
         }
     }
 }

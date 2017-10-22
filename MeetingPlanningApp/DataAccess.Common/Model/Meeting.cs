@@ -12,19 +12,22 @@ namespace DataAccess.Common.Model
 
         public DateTime ScheduledTime { get; }
 
+        public TimeSpan Duration { get; }
+
         public string Title { get; }
 
         public string Agenda { get; }
 
-        public IEnumerable<Attendant> Attendees { get; }
+        public IEnumerable<Attendee> Attendees { get; }
 
-        public Meeting(DateTime scheduledTime, string title, string agenda, IEnumerable<Attendant> attendees, Guid? id = null)
+        public Meeting(DateTime scheduledTime, string title, string agenda, IEnumerable<Attendee> attendees, TimeSpan duration, Guid? id = null)
         {
             Id = id ?? Guid.NewGuid();
             ScheduledTime = scheduledTime;
             Title = title;
             Agenda = agenda;
             Attendees = attendees;
+            Duration = duration;
         }
     }
 }

@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IConflictFinder.cs" />
     <Compile Include="Interfaces\IMeetingPersister.cs" />
     <Compile Include="Interfaces\IMeetingProvider.cs" />
-    <Compile Include="Model\Attendant.cs" />
+    <Compile Include="Model\Attendee.cs" />
+    <Compile Include="Model\AttendeeConflicts.cs" />
     <Compile Include="Model\Meeting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

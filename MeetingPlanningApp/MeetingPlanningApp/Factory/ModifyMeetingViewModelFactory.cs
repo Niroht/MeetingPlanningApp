@@ -14,21 +14,26 @@ namespace MeetingPlanningApp.Factory
     {
         private readonly IViewModelRenderer _viewModelRenderer;
         private readonly IMeetingPersister _meetingPersister;
+        private readonly IConflictFinder _conflictFinder;
 
-        public ModifyMeetingViewModelFactory(IMeetingPersister meetingPersister, IViewModelRenderer viewModelRenderer)
+        public ModifyMeetingViewModelFactory(
+            IMeetingPersister meetingPersister, 
+            IViewModelRenderer viewModelRenderer,
+            IConflictFinder conflictFinder)
         {
             _meetingPersister = meetingPersister;
             _viewModelRenderer = viewModelRenderer;
+            _conflictFinder = conflictFinder;
         }
 
         public ModifyMeetingViewModel Create()
         {
-            return new ModifyMeetingViewModel(_meetingPersister, _viewModelRenderer);
+            return new ModifyMeetingViewModel(_meetingPersister, _conflictFinder, _viewModelRenderer);
         }
 
         public ModifyMeetingViewModel Create(Meeting meeting)
         {
-            return new ModifyMeetingViewModel(meeting, _meetingPersister, _viewModelRenderer);
+            return new ModifyMeetingViewModel(meeting, _meetingPersister, _conflictFinder, _viewModelRenderer);
         }
     }
 }

@@ -19,11 +19,11 @@ namespace DataAccessTests
             // arrange
             var tc = new TestContext();
 
-            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendant>()) };
+            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1)) };
             tc.MeetingStoreMock.Setup(x => x.GetMeetings()).Returns(meetings);
 
             // act
-            tc.Sut.SaveMeeting(new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendant>(), meetings[0].Id));
+            tc.Sut.SaveMeeting(new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1), meetings[0].Id));
 
             // assert
             tc.MeetingStoreMock.Verify(x => x.UpdateMeeting(It.Is<Meeting>(meeting => meeting.Id == meetings[0].Id)));
@@ -36,11 +36,11 @@ namespace DataAccessTests
             // arrange
             var tc = new TestContext();
 
-            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendant>()) };
+            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1)) };
             tc.MeetingStoreMock.Setup(x => x.GetMeetings()).Returns(meetings);
 
             // act
-            tc.Sut.SaveMeeting(new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendant>(), meetings[0].Id));
+            tc.Sut.SaveMeeting(new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1), meetings[0].Id));
 
             // assert
             tc.MessengerMock.Verify(x => x.Send(It.IsAny<MeetingUpdatedMessage>()));
@@ -53,7 +53,7 @@ namespace DataAccessTests
             var tc = new TestContext();
 
             var id = Guid.NewGuid();
-            var meeting = new Meeting(DateTime.Now, "a", "a", Enumerable.Empty<Attendant>(), id);
+            var meeting = new Meeting(DateTime.Now, "a", "a", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1), id);
 
             // act
             tc.Sut.DeleteMeeting(meeting);
@@ -69,7 +69,7 @@ namespace DataAccessTests
             var tc = new TestContext();
 
             var id = Guid.NewGuid();
-            var meeting = new Meeting(DateTime.Now, "a", "a", Enumerable.Empty<Attendant>(), id);
+            var meeting = new Meeting(DateTime.Now, "a", "a", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1), id);
 
             // act
             tc.Sut.DeleteMeeting(meeting);
@@ -84,10 +84,10 @@ namespace DataAccessTests
             // arrange
             var tc = new TestContext();
 
-            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendant>()) };
+            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1)) };
             tc.MeetingStoreMock.Setup(x => x.GetMeetings()).Returns(meetings);
 
-            var newMeeting = new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendant>());
+            var newMeeting = new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1));
 
             // act
             tc.Sut.SaveMeeting(newMeeting);
@@ -103,10 +103,10 @@ namespace DataAccessTests
             // arrange
             var tc = new TestContext();
 
-            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendant>()) };
+            var meetings = new[] { new Meeting(DateTime.Today.AddDays(1), "a", "a", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1)) };
             tc.MeetingStoreMock.Setup(x => x.GetMeetings()).Returns(meetings);
 
-            var newMeeting = new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendant>());
+            var newMeeting = new Meeting(DateTime.Today.AddDays(1), "b", "b", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1));
 
             // act
             tc.Sut.SaveMeeting(newMeeting);

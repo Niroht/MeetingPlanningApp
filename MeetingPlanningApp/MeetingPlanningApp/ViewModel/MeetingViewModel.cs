@@ -17,15 +17,25 @@ namespace MeetingPlanningApp.ViewModel
         private readonly IModifyMeetingViewModelFactory _modifyMeetingViewModelFactory;
         private readonly IViewModelRenderer _viewModelRenderer;
 
+        private TimeSpan _duration;
+
         public Guid Id { get; }
 
         public DateTime ScheduledTime { get; set; }
+
+        public DateTime EndTime
+        {
+            get
+            {
+                return ScheduledTime.Add(_duration);
+            }
+        }
 
         public string Title { get; set; }
 
         public string Agenda { get; set; }
 
-        public IEnumerable<Attendant> Attendants { get; set; }
+        public IEnumerable<Attendee> Attendants { get; set; }
 
         public ICommand ModifyMeetingCommand => new RelayCommand(OnModifyMeeting);
 
@@ -41,11 +51,12 @@ namespace MeetingPlanningApp.ViewModel
             Title = meeting.Title;
             Agenda = meeting.Agenda;
             Attendants = meeting.Attendees;
+            _duration = meeting.Duration;
         }
 
         private void OnModifyMeeting()
         {
-            var meeting = new Meeting(ScheduledTime, Title, Agenda, Attendants, Id);
+            var meeting = new Meeting(ScheduledTime, Title, Agenda, Attendants, _duration, Id);
             var modifyViewModel = _modifyMeetingViewModelFactory.Create(meeting);
 
             _viewModelRenderer.RenderViewModelInModal(modifyViewModel);

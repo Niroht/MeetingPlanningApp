@@ -11,6 +11,11 @@
         <RowDefinition/>
         <RowDefinition/>
         <RowDefinition/>
+        <RowDefinition/>
+        <RowDefinition/>
+        <RowDefinition/>
+        <RowDefinition/>
+        <RowDefinition/>
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto"/>
@@ -18,18 +23,54 @@
       </Grid.ColumnDefinitions>
 
       <TextBlock Text="Date" />
-      <DatePicker SelectedDate="{Binding ScheduledTime}" Grid.Column="1"/>
+      <DatePicker SelectedDate="{Binding ScheduledDay}" Grid.Column="1"/>
 
-      <TextBlock Text="Title" Grid.Row="1"/>
-      <TextBox Text="{Binding Title}" Grid.Row="1" Grid.Column="1"/>
+      <TextBlock Text="Time" Grid.Row="1"/>
+      <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" >
+        <ComboBox ItemsSource="{Binding HourValues}" SelectedValue="{Binding ScheduledHour}" />
+        <TextBlock Text=":"/>
+        <ComboBox ItemsSource="{Binding MinuteValues}" SelectedValue="{Binding ScheduledMinute}" />
+      </StackPanel>
 
-      <TextBlock Text="Agenda" Grid.Row="2"/>
-      <TextBox Text="{Binding Agenda}" Grid.Row="2" Grid.Column="2" />
+      <TextBlock Text="Duration" Grid.Row="2"/>
+      <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
+        <TextBox Text="{Binding DurationHours, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="Hours"/>
+        <TextBox Text="{Binding DurationMinutes, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="Minutes"/>
+        <TextBlock Text=" | " />
+        <TextBlock>
+          <Run Text="Ends at" />
+          <Run Text="{Binding EndTime, StringFormat='{}{0:t}', Mode=OneWay}" />
+        </TextBlock>
+      </StackPanel>
 
-      <StackPanel Orientation="Horizontal" Grid.Row="3">
+      <TextBlock Text="Title" Grid.Row="3"/>
+      <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
+
+      <TextBlock Text="Agenda" Grid.Row="4"/>
+      <TextBox Text="{Binding Agenda, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="2" />
+
+      <StackPanel Grid.Row="5" Grid.ColumnSpan="2" >
+        <TextBlock Text="Attendees" Style="{DynamicResource HeaderText}" />
+        <DataGrid ItemsSource="{Binding Attendees}" />
+      </StackPanel>
+
+      <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal">
+        <TextBlock Text="New Attendee" Style="{DynamicResource HeaderText}"/>
+        <TextBlock Text="Name: "/>
+        <TextBox Text="{Binding NewAttendeeName, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="Email: "/>
+        <TextBox Text="{Binding NewAttendeeEmail, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="Add" Command="{Binding AddAttendeeCommand}" />
+      </StackPanel>
+
+      <StackPanel Orientation="Horizontal" Grid.Row="7">
         <Button Content="Save" Command="{Binding SaveNewMeetingCommand}" />
         <Button Content="Delete" Command="{Binding DeleteMeetingCommand}" Visibility="{Binding ExistingMeeting, Converter={StaticResource NullToVisibilityConverter}}"/>
       </StackPanel>
+
+      <TextBlock Grid.Row="8" Grid.ColumnSpan="2" Text="{Binding ConflictMessage}" Foreground="Red" />
 
     </Grid>
   </DataTemplate>
