@@ -210,7 +210,7 @@ namespace MeetingPlanningApp.ViewModel
 
         public ICommand DeleteMeetingCommand => new RelayCommand(async () => await DeleteMeeting());
 
-        public ICommand AddAttendeeCommand => new RelayCommand(async () => await AddAttendee(), () => !string.IsNullOrEmpty(NewAttendeeEmail) && !string.IsNullOrEmpty(NewAttendeeName));
+        public ICommand AddAttendeeCommand => new RelayCommand(async () => await AddAttendee(), CanAddAttendee);
 
         public ICommand SaveNewMeetingCommand => new RelayCommand(async () => await SaveMeetingAsync(), () => CanProceed);
 
@@ -293,6 +293,13 @@ namespace MeetingPlanningApp.ViewModel
         {
             await _meetingPersister.DeleteMeeting(_existingMeeting);
             _viewModelRenderer.HideModal();
+        }
+
+        private bool CanAddAttendee()
+        {
+            return !string.IsNullOrWhiteSpace(NewAttendeeName)
+                && !string.IsNullOrWhiteSpace(NewAttendeeEmail)
+                && !Attendees.Select(x => x.Email).Contains(NewAttendeeEmail);
         }
     }
 }
