@@ -8,6 +8,7 @@ using MeetingPlanningApp.Factory;
 using MeetingPlanningApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,26 +18,35 @@ namespace MeetingPlanningApp.ViewModel
 {
     public class ScheduleOverviewViewModel : ViewModelBase
     {
+        private readonly IMonthViewModelFactory _monthViewModelFactory;
         private readonly IMeetingViewModelFactory _meetingViewModelFactory;
         private readonly IMeetingProvider _meetingProvider;
         private readonly IViewModelRenderer _viewModelRenderer;
         private readonly IModifyMeetingViewModelFactory _createMeetingViewModelFactory;
 
-        private IEnumerable<MeetingViewModel> _allMeetingsInView;
-
+        private IEnumerable<MeetingViewModel> _upcomingMeetings;
         public IEnumerable<MeetingViewModel> UpcomingMeetings
         {
             get
             {
-                return _allMeetingsInView.Where(x => (x.ScheduledTime - DateTime.Now).Days < 3);
+                return _upcomingMeetings;
+            }
+            set
+            {
+                Set(nameof(UpcomingMeetings), ref _upcomingMeetings, value);
             }
         }
 
-        public IEnumerable<MeetingViewModel> CalendarMeetings
+        private MonthViewModel _monthlyMeetings;
+        public MonthViewModel MonthlyMeetings
         {
             get
             {
-                return _allMeetingsInView.Where(x => x.ScheduledTime.Month == DateTime.Now.Month);
+                return _monthlyMeetings;
+            }
+            set
+            {
+                Set(nameof(MonthlyMeetings), ref _monthlyMeetings, value);
             }
         }
 
@@ -49,12 +59,14 @@ namespace MeetingPlanningApp.ViewModel
             IMessenger messenger,
             IViewModelRenderer viewModelRenderer,
             IModifyMeetingViewModelFactory createMeetingViewModelFactory,
-            IMeetingViewModelFactory meetingViewModelFactory)
+            IMeetingViewModelFactory meetingViewModelFactory,
+            IMonthViewModelFactory monthViewModelFactory)
         {
             _meetingProvider = meetingProvider;
             _viewModelRenderer = viewModelRenderer;
             _createMeetingViewModelFactory = createMeetingViewModelFactory;
             _meetingViewModelFactory = meetingViewModelFactory;
+            _monthViewModelFactory = monthViewModelFactory;
 
             messenger.Register<MeetingCreatedMessage>(this, async x => await LoadMeetings());
             messenger.Register<MeetingUpdatedMessage>(this, async x => await LoadMeetings());
@@ -65,12 +77,11 @@ namespace MeetingPlanningApp.ViewModel
 
         private async Task LoadMeetings()
         {
-            _allMeetingsInView = (await _meetingProvider
-                .GetMeetings(DateTime.Today, DateTime.Today.AddDays(30)))
+            UpcomingMeetings = (await _meetingProvider
+                .GetMeetings(DateTime.Today, DateTime.Today.AddDays(3)))
                 .Select(x => _meetingViewModelFactory.Create(x));
 
-            RaisePropertyChanged(nameof(UpcomingMeetings));
-            RaisePropertyChanged(nameof(CalendarMeetings));
+            MonthlyMeetings = await _monthViewModelFactory.Create();
         }
     }
 }

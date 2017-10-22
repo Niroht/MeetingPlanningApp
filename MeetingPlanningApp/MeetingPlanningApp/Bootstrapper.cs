@@ -37,6 +37,7 @@ namespace MeetingPlanningApp
             container.RegisterType<IModifyMeetingViewModelFactory, ModifyMeetingViewModelFactory>();
             container.RegisterType<IMeetingViewModelFactory, MeetingViewModelFactory>();
             container.RegisterType<IConflictFinder, ConflictFinder>();
+            container.RegisterType<IMonthViewModelFactory, MonthViewModelFactory>();
         }
     }
 }

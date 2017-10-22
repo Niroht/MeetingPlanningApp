@@ -1,0 +1,90 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:MeetingPlanningApp.ViewModel"
+                    xmlns:converter="clr-namespace:MeetingPlanningApp.Converter"
+                    xmlns:local="clr-namespace:MeetingPlanningApp.View">
+
+  <DataTemplate DataType="{x:Type vm:MonthViewModel}">
+    <Grid x:Name="MonthGrid">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+
+      <TextBlock 
+        Text="{Binding Month}" 
+        Style="{DynamicResource HeaderText}" 
+        HorizontalAlignment="Center" 
+        Margin="10"
+        />
+
+      <ItemsControl 
+        Grid.Row="1" 
+        ItemsSource="{Binding DayViewModels}" 
+        HorizontalAlignment="Center">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="7"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+    </Grid>
+  </DataTemplate>
+
+  <DataTemplate DataType="{x:Type vm:DayViewModel}" >
+    <Button Command="{Binding NewMeetingCommand}" Margin="0">
+      <Button.Template>
+        <ControlTemplate>
+          <Border 
+      BorderBrush="Black" 
+      BorderThickness="1" 
+      >
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <Grid.Style>
+                <Style TargetType="Grid">
+                  <Setter Property="Background" Value="White" />
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding CanCreateMeeting}" Value="False">
+                      <Setter Property="Background" Value="WhiteSmoke"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsCurrentMonth}" Value="False">
+                      <Setter Property="Background" Value="LightGray" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Grid.Style>
+              <TextBlock Text="{Binding Date, StringFormat='{}{0:dd}'}" />
+              <ItemsControl Grid.Row="1" ItemsSource="{Binding Meetings}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate DataType="{x:Type vm:MeetingViewModel}">
+                    <Button 
+                      Command="{Binding ModifyMeetingCommand}"
+                      Margin="3"
+                      >
+                      <Button.Template>
+                        <ControlTemplate>
+                          <StackPanel Background="LightBlue" >
+                            <TextBlock Style="{DynamicResource HeaderText}">
+                              <Run Text="{Binding ScheduledTime, StringFormat='{}{0:t}'}"/>
+                              -
+                              <Run Text="{Binding EndTime, StringFormat='{}{0:t}', Mode=OneWay}"/>
+                            </TextBlock>
+                            <TextBlock Text="{Binding Title}" />
+                          </StackPanel>
+                        </ControlTemplate>
+                      </Button.Template>
+                    </Button>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Button.Template>
+    </Button>
+  </DataTemplate>
+</ResourceDictionary>

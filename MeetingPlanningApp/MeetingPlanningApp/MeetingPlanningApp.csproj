@@ -79,11 +79,15 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Converter\NullToVisibilityConverter.cs" />
     <Compile Include="Factory\IMeetingViewModelFactory.cs" />
+    <Compile Include="Factory\IMonthViewModelFactory.cs" />
     <Compile Include="Factory\MeetingViewModelFactory.cs" />
     <Compile Include="Factory\ModifyMeetingViewModelFactory.cs" />
     <Compile Include="Factory\IModifyMeetingViewModelFactory.cs" />
+    <Compile Include="Factory\MonthViewModelFactory.cs" />
     <Compile Include="Services\IViewModelRenderer.cs" />
     <Compile Include="Services\ViewModelRenderer.cs" />
+    <Compile Include="ViewModel\MonthViewModel.cs" />
+    <Compile Include="ViewModel\DayViewModel.cs" />
     <Compile Include="ViewModel\ModifyMeetingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MeetingViewModel.cs" />
@@ -110,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DataTemplateDefinitions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

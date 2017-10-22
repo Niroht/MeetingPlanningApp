@@ -21,7 +21,7 @@
         <ItemsControl ItemsSource="{Binding UpcomingMeetings}" ItemTemplate="{DynamicResource UpcomingMeetingView}"/>
       </StackPanel>
 
-      <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding CalendarMeetings}" />
+      <ContentPresenter Grid.Row="1" Grid.Column="1" Content="{Binding MonthlyMeetings}" Margin="20"/>
 
       <Button
         Grid.Row="2"

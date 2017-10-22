@@ -4,6 +4,7 @@
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="ModifyMeetingView.xaml" />
     <ResourceDictionary Source="ScheduleOverviewView.xaml" />
-    <ResourceDictionary Source="UpcomingMEetingView.xaml" />
+    <ResourceDictionary Source="UpcomingMeetingView.xaml" />
+    <ResourceDictionary Source="MonthView.xaml" />
   </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

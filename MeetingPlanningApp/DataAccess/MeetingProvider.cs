@@ -14,7 +14,10 @@ namespace DataAccess
 
         public Task<IEnumerable<Meeting>> GetMeetings(DateTime startDate, DateTime endDate)
         {
-            return Task.FromResult(_meetingStore.GetMeetings());
+            var meetings = _meetingStore.GetMeetings();
+            var filteredMeetings = meetings.Where(x => x.ScheduledTime.Date >= startDate.Date && x.EndTime.Date <= endDate.Date);
+
+            return Task.FromResult(filteredMeetings);
         }
 
         public MeetingProvider(IMeetingStore meetingStore)
