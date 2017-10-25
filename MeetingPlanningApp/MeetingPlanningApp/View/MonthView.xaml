@@ -15,10 +15,10 @@
         Text="{Binding Month}" 
         Style="{DynamicResource HeaderText}" 
         HorizontalAlignment="Center" 
-        Margin="10"
         />
 
       <ItemsControl 
+        Margin="20"
         Grid.Row="1" 
         ItemsSource="{Binding DayViewModels}" 
         HorizontalAlignment="Stretch">
@@ -36,9 +36,9 @@
       <Button.Template>
         <ControlTemplate>
           <Border 
-      BorderBrush="Black" 
-      BorderThickness="1" 
-      >
+            BorderBrush="Black" 
+            BorderThickness="1" 
+            >
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
