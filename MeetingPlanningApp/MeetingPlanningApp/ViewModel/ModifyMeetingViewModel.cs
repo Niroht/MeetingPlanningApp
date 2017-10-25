@@ -30,11 +30,11 @@ namespace MeetingPlanningApp.ViewModel
             }
         }
 
-        public IEnumerable<int> HourValues => Enumerable.Range(1, 24);
+        public IEnumerable<int> HourValues => Enumerable.Range(0, 24);
 
-        public IEnumerable<int> MinuteValues => Enumerable.Range(1, 60);
+        public IEnumerable<int> MinuteValues => Enumerable.Range(0, 60);
 
-        private DateTime _scheduledDateTime = DateTime.Now.AddHours(1);
+        private DateTime _scheduledDateTime;
         public DateTime ScheduledDay
         {
             get
@@ -225,6 +225,8 @@ namespace MeetingPlanningApp.ViewModel
             _viewModelRenderer = viewModelRenderer;
             _conflictFinder = conflictFinder;
 
+            _scheduledDateTime = DateTime.Now.AddHours(1);
+
             IdentifyConflicts();
         }
 
@@ -261,7 +263,7 @@ namespace MeetingPlanningApp.ViewModel
 
         private async Task AddAttendee()
         {
-            Attendees.Add(new Attendee(NewAttendeeName, NewAttendeeEmail));
+            Attendees.Add(new Attendee { Name = NewAttendeeName, Email = NewAttendeeEmail });
 
             await IdentifyConflicts();
         }

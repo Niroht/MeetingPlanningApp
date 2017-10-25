@@ -1,5 +1,6 @@
 ﻿using DataAccess.Common.Model;
 using Microsoft.WindowsAzure.Storage.Table;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,16 +33,7 @@ namespace DataAccess.Azure
 
         internal Meeting ToMeeting()
         {
-            var attendeeStrings = Attendees.Split('|');
-            var attendees = new List<Attendee>();
-
-            foreach(var attendeeString in attendeeStrings)
-            {
-                var parameters = attendeeString.Split(';');
-                attendees.Add(new Attendee(parameters[0], parameters[1]));
-            }
-
-            return new Meeting(ScheduledTime, Title, Agenda, attendees, EndTime - ScheduledTime, Id);
+            return new Meeting(ScheduledTime, Title, Agenda, JsonConvert.DeserializeObject<IEnumerable<Attendee>>(Attendees), EndTime - ScheduledTime, Id);
         }
     }
 }

@@ -8,14 +8,12 @@ namespace DataAccess.Common.Model
 {
     public class Attendee
     {
-        public string Name { get; }
+        public string Name { get; set; }
 
-        public string Email { get; }
+        public string Email { get; set; }
 
-        public Attendee(string name, string email)
+        public Attendee()
         {
-            Name = name;
-            Email = email;
         }
     }
 }

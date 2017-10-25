@@ -42,7 +42,7 @@ namespace MeetingPlanningApp.ViewModel
 
         private void OnCreateNewMeeting()
         {
-            var meeting = new Meeting(Date, "", "", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1));
+            var meeting = new Meeting(Date.Add(DateTime.Now.TimeOfDay), "", "", Enumerable.Empty<Attendee>(), TimeSpan.FromHours(1));
             _viewModelRenderer.RenderViewModelInModal(_modifyMeetingViewModelFactory.Create(meeting));
         }
     }

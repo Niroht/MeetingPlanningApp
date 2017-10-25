@@ -1,4 +1,5 @@
 ﻿using DataAccess.Common.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace DataAccess.Azure
                 Title = meeting.Title,
                 ScheduledTime = meeting.ScheduledTime,
                 EndTime = meeting.EndTime,
-                Attendees = string.Join("|", meeting.Attendees.Select(x => string.Join(";", x.Name, x.Email))),
+                Attendees = JsonConvert.SerializeObject(meeting.Attendees),
                 Agenda = meeting.Agenda,
             };
         }
